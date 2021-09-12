@@ -1830,7 +1830,7 @@ You've been had .
 You've grown up .
 Your bag's open .
 Your time is up .
-" Look, " she said .
+" Look , " she said .
 Accidents happen .
 Answer the phone .
 Anybody can join .
@@ -3113,7 +3113,7 @@ I know those women .
 I know what he did .
 I know what to say .
 I lead a busy life .
-I like L.A . better .
+I like L.A. better .
 I like candlelight .
 I like mathematics .
 I like mathematics .
@@ -3587,7 +3587,7 @@ You're still green .
 You're still young .
 You're such a jerk .
 You're turning red .
-" Trust me, " he said .
+" Trust me , " he said .
 A whale is a mammal .
 Am I a good teacher ?
 America is very big .
@@ -4767,7 +4767,7 @@ This is a good movie .
 This is a small town .
 This is a true story .
 This is just for you .
-This is my I.D . card .
+This is my I.D. card .
 This isn't difficult .
 This isn't true love .
 This job doesn't pay .
@@ -7518,7 +7518,7 @@ You've got to be joking .
 You've never been happy .
 Your dress is very nice .
 Your wife is mad at you .
-" I'll be back, " said Tom .
+" I'll be back , " said Tom .
 A light bulb gives light .
 A truck ran over our dog .
 A unicycle has one wheel .
@@ -8520,7 +8520,7 @@ Your shirt is unbuttoned .
 Your son has come of age .
 Your tie has come undone .
 Your time is running out .
-" Let's go, " he said to me .
+" Let's go , " he said to me .
 A fork fell off the table .
 Air is a mixture of gases .
 All at once , he spoke out .
@@ -9632,7 +9632,7 @@ He painted his bicycle red .
 He plays baseball tomorrow .
 He ran as fast as he could .
 He said hello to the woman .
-He said , " I'm from Canada. "
+He said , " I'm from Canada . "
 He saw a dog near the door .
 He sent me a birthday card .
 He shaved his mustache off .
@@ -10427,8 +10427,8 @@ You're too young to retire .
 Your father is pretty tall .
 Your memory isn't too good .
 Your work is below average .
-" How do you feel? " he asked .
-" More coffee? " " No , thanks. "
+" How do you feel ? " he asked .
+" More coffee ? " " No , thanks . "
 A good idea occurred to him .
 A man can't escape his past .
 A mouse is a timid creature .
@@ -11498,8 +11498,8 @@ Your prophecy has come true .
 Your question has no answer .
 Your tripod is in my office .
 Your view is too optimistic .
-" She likes music. " " So do I. "
-" You talk too much, " he said .
+" She likes music . " " So do I . "
+" You talk too much , " he said .
 A Mexican taught him Spanish .
 A beautiful sunset , isn't it ?
 A big tree fell in the storm .
@@ -11655,7 +11655,7 @@ He pretended to be my friend .
 He put the book on the shelf .
 He put the book on the table .
 He refused my friend request .
-He said , " It's nine o'clock. "
+He said , " It's nine o'clock . "
 He shot an arrow at the deer .
 He should have been a lawyer .
 He sometimes comes to see me .
@@ -12445,8 +12445,8 @@ You've told Tom , haven't you ?
 Your behavior is intolerable .
 Your brother will not buy it .
 Your pen is better than mine .
-" I like traveling. " " So do I. "
-" Who is in the car? " " Tom is. "
+" I like traveling . " " So do I . "
+" Who is in the car ? " " Tom is . "
 A bird is singing in the tree .
 A crowd gathered at the scene .
 A doctor was sent for at once .
@@ -15085,8 +15085,8 @@ You're the one who must decide .
 Your glasses fell on the floor .
 Your proposal is a bit extreme .
 Your son is dating my daughter .
-" What's in that box? " " Nothing. "
-" Who is it? " " It's your mother. "
+" What's in that box ? " " Nothing . "
+" Who is it ? " " It's your mother . "
 A beautiful girl sat next to me .
 A card was attached to the gift .
 A computer is a complex machine .
@@ -16264,9 +16264,9 @@ Your problem is similar to mine .
 Your problem is similar to mine .
 Your shirt button is coming off .
 Your team is stronger than ours .
-" Can somebody help me? " " I will. "
-" How old are you? " " I'm sixteen. "
-" I think so , too, " she chimed in .
+" Can somebody help me ? " " I will . "
+" How old are you ? " " I'm sixteen . "
+" I think so , too , " she chimed in .
 A baby is sleeping in the cradle .
 A crowd soon gathered around him .
 A plane is flying above the city .
@@ -16465,7 +16465,7 @@ He read the letter over and over .
 He resigned and fled the country .
 He risked losing all his fortune .
 He said that it was nine o'clock .
-He said , " I want to be a doctor. "
+He said , " I want to be a doctor . "
 He scraped the mud off his boots .
 He sent the letter back unopened .
 He should have been more careful .
@@ -17451,9 +17451,9 @@ Your parents loved you very much .
 Your plan seems better than mine .
 Your second button is coming off .
 Your suggestion seems reasonable .
-" Are you tired? " " No , not at all. "
-" Is he right? " " I don't think so. "
-" Is she coming , too? " " I hope so. "
+" Are you tired ? " " No , not at all . "
+" Is he right ? " " I don't think so . "
+" Is she coming , too ? " " I hope so . "
 A DNA test showed he was innocent .
 A ball is floating down the river .
 A brilliant future lay before him .
@@ -18485,8 +18485,8 @@ You've put on weight , haven't you ?
 Your driver's license has expired .
 Your friend's very late , isn't he ?
 Your friendship means a lot to me .
-" I saw her five days ago, " he said .
-" Thanks , guys. " " Don't mention it. "
+" I saw her five days ago , " he said .
+" Thanks , guys . " " Don't mention it . "
 A boy is walking across the street .
 A cat came out from under the desk .
 A group of young men were fighting .
@@ -18637,7 +18637,7 @@ He never looks down on poor people .
 He passed the entrance examination .
 He ran faster than his brother did .
 He rescued the child from the fire .
-He said , " Let's take a short rest. "
+He said , " Let's take a short rest . "
 He sat there with his legs crossed .
 He seldom , if ever , goes to church .
 He sent me some American magazines .
@@ -19527,8 +19527,8 @@ You're the only person I can trust .
 You've got a big hole in your sock .
 You've got something in your teeth .
 Your parents didn't come , did they ?
-" Where's your book? " " On the table. "
-" Whose chair is this? " " It is mine. "
+" Where's your book ? " " On the table . "
+" Whose chair is this ? " " It is mine . "
 A Japanese wouldn't do such a thing .
 A bridge was built across the river .
 A dog can run faster than a man can .
@@ -19613,7 +19613,7 @@ Have you ever seen such a nice film ?
 Have you finished reading that book ?
 Have you traveled anywhere recently ?
 He always mistakes me for my sister .
-He answered my question with a " no. "
+He answered my question with a " no . "
 He appears to be strong and healthy .
 He became an orphan when he was ten .
 He came out from behind the curtain .
@@ -19643,7 +19643,7 @@ He made many excuses for being late .
 He made the best of the opportunity .
 He made the most of his opportunity .
 He said that it would probably rain .
-He said , " I want to be a scientist. "
+He said , " I want to be a scientist . "
 He spent the morning reading a book .
 He spent the morning reading a book .
 He swam until he could swim no more .
@@ -20157,11 +20157,11 @@ You'll need a special tool to do it .
 You're the only one who can help us .
 Your brother got married , didn't he ?
 Your composition has a few mistakes .
-" Do you speak German? " " No , I don't. "
-" Does he like music? " " Yes , he does. "
-" How are you? " " I'm fine , thank you. "
-" Tom isn't here. " " Then where is he? "
-" What should I do? " I said to myself .
+" Do you speak German ? " " No , I don't . "
+" Does he like music ? " " Yes , he does . "
+" How are you ? " " I'm fine , thank you . "
+" Tom isn't here . " " Then where is he ? "
+" What should I do ? " I said to myself .
 A couple from Boston was also killed .
 A fool and his money are soon parted .
 A gentleman wouldn't do such a thing .
@@ -20759,12 +20759,12 @@ You're the new secretary , aren't you ?
 You're the only one that can help us .
 Your mother is in critical condition .
 Your opinion is very important to us .
-" How are you? " " I am fine , thank you. "
-" How old are you? " " I'm 16 years old. "
-" The phone is ringing. " " I'll get it. "
-" The phone is ringing. " " I'll get it. "
-" What happened? " " The car broke down. "
-" What time is it? " " It is ten-thirty. "
+" How are you ? " " I am fine , thank you . "
+" How old are you ? " " I'm 16 years old . "
+" The phone is ringing . " " I'll get it . "
+" The phone is ringing . " " I'll get it . "
+" What happened ? " " The car broke down . "
+" What time is it ? " " It is ten-thirty . "
 A fire broke out after the earthquake .
 A panel of experts discussed the plan .
 A plastic dish will melt on the stove .
@@ -21277,8 +21277,8 @@ You'll soon get used to Japanese food .
 You're the master of your own destiny .
 Your question does not have an answer .
 Zimbabwe was once a colony of Britain .
-" How old are you? " " Sixteen years old" .
-" I feel like playing cards. " " So do I. "
+" How old are you ? " " Sixteen years old" .
+" I feel like playing cards . " " So do I . "
 A day without laughter is a day wasted .
 A little learning is a dangerous thing .
 A man suddenly appeared in the doorway .
@@ -21440,7 +21440,7 @@ I ran into my aunt by chance in Europe .
 I really don't understand this problem .
 I received a letter three months later .
 I remember you . We met three years ago .
-I said to myself , " That's a good idea. "
+I said to myself , " That's a good idea . "
 I saw Tom having an argument with Mary .
 I should've gone to Australia with Tom .
 I think I mistakenly deleted that file .
@@ -21566,7 +21566,7 @@ She got all dolled up for her big date .
 She had an appointment with the doctor .
 She is far better today than yesterday .
 She pressed her nose against the glass .
-She said to herself , " I am very happy. "
+She said to herself , " I am very happy . "
 She stirred her coffee with a teaspoon .
 She walked slowly so she wouldn't slip .
 She wants to know who sent the flowers .
@@ -22202,10 +22202,10 @@ You've never had a girlfriend , have you ?
 Your assistance is indispensable for us .
 Your behavior leaves much to be desired .
 Your name has been crossed off the list .
-" Are the drinks free? " " Only for ladies. "
-" He used to love me, " she answered sadly .
-" Would you like some tea? " " Yes , please. "
-" Would you like some tea? " " Yes , please. "
+" Are the drinks free ? " " Only for ladies . "
+" He used to love me , " she answered sadly .
+" Would you like some tea ? " " Yes , please . "
+" Would you like some tea ? " " Yes , please . "
 A boat suddenly appeared out of the mist .
 A good craftsman takes pride in his work .
 A soccer team consists of eleven players .
@@ -22480,7 +22480,7 @@ The world is full of incompetent doctors .
 There are many beautiful parks in London .
 There are only three women in this class .
 There are so many people at this concert .
-There are two zeros in the number " 2010. "
+There are two zeros in the number " 2010 . "
 There aren't many books on these shelves .
 There is always something happening here .
 There is no knowing what he will do next .
@@ -22614,8 +22614,8 @@ You're stepping into dangerous territory .
 You're taller than most of Tom's friends .
 You're the only one who can protect them .
 You've got something stuck in your teeth .
-" Do you think he will come? " " I hope not. "
-" Shall I take a message? " " No , thank you. "
+" Do you think he will come ? " " I hope not . "
+" Shall I take a message ? " " No , thank you . "
 A baseball came flying through the window .
 A brass band is marching along the street .
 A change of air will do you a lot of good .
@@ -22953,7 +22953,7 @@ You'd better do as the doctor advised you .
 You'll get used to living here in no time .
 You'll learn how to do it sooner or later .
 You're never satisfied with anything I do .
-" Pass me the salt , please. " " Here you are. "
+" Pass me the salt , please . " " Here you are . "
 A Persian cat was sleeping under the table .
 A face with too much make up looks strange .
 A huge monster is coming down the mountain .
@@ -23146,7 +23146,7 @@ My sister takes piano lessons twice a week .
 My uncle comes to see me from time to time .
 My uncles come to see me from time to time .
 Nature plays an important role in our life .
-No matter what you say , the answer is " no. "
+No matter what you say , the answer is " no . "
 Not a day passes without traffic accidents .
 Once he had written the letter , he sent it .
 One can't help many , but many can help one .
@@ -23564,7 +23564,7 @@ What are you lingering for ? Hurry up and go .
 What do you think of those Japanese writers ?
 What is the total amount of money you spent ?
 What number bus do I take to get to Waikiki ?
-Where is the accent on the word ' Australia? '
+Where is the accent on the word ' Australia ' ?
 Which is better , red thread or white thread ?
 Who can tell what will happen in the future ?
 Will the fine weather keep up till tomorrow ?
@@ -23582,9 +23582,9 @@ You needn't have taken an umbrella with you .
 You smoke far too much . You should cut back .
 You'll be able to drive a car in a few days .
 You're the kind of person I'd like to marry .
-" Did you watch TV last week? " " No , I didn't. "
-" Is he going to swim tomorrow? " " Yes , he is. "
-" Is he going to swim tomorrow? " " Yes , he is. "
+" Did you watch TV last week ? " " No , I didn't . "
+" Is he going to swim tomorrow ? " " Yes , he is . "
+" Is he going to swim tomorrow ? " " Yes , he is . "
 A great responsibility lies on his shoulders .
 A wise leader knows when to listen to others .
 After several delays , the plane finally left .
@@ -23850,8 +23850,8 @@ You will soon get used to speaking in public .
 You'd better keep your money for a rainy day .
 You'd better take an umbrella with you today .
 Your voice reminds me of my late grandmother .
-" I never thought Tom would win. " " Me neither. "
-" Where were you? " " I was at a friend's house. "
+" I never thought Tom would win . " " Me neither . "
+" Where were you ? " " I was at a friend's house . "
 A great number of citizens went into the army .
 A large pillar obstructs the view of the lake .
 A lot of houses were washed away by the flood .
@@ -23964,7 +23964,7 @@ It was not long before we met again by chance .
 It's been ten years since I came to this town .
 It's next to impossible to finish it in a day .
 It's time you went to bed . Turn off the radio .
-J.F . Kennedy was buried in Arlington Cemetery .
+J.F. Kennedy was buried in Arlington Cemetery .
 Jazz fusion is a combination of rock and jazz .
 Just pull the door shut . It'll lock by itself .
 Life begins when we realize who we really are .
@@ -24522,9 +24522,9 @@ You'd be surprised what you can learn in a week .
 You'd do that if Tom asked you to , wouldn't you ?
 You'll soon get accustomed to this cold weather .
 You're not old enough to get a driver's license .
-" Did he write a letter yesterday? " " Yes , he did. "
-" I'll do it tomorrow. " " You said that yesterday! "
-" Would you like any more? " " No , I've had enough. "
+" Did he write a letter yesterday ? " " Yes , he did . "
+" I'll do it tomorrow . " " You said that yesterday ! "
+" Would you like any more ? " " No , I've had enough . "
 A barber is a man who shaves and cuts men's hair .
 A doctor told me that eating eggs was bad for me .
 A friend of mine asked me to send her a postcard .
@@ -24710,9 +24710,9 @@ You'll be able to see the difference very easily .
 You'll be able to see the difference very easily .
 You're still too young to get a driver's license .
 You're the one who decided to do this job , right ?
-" Why aren't you going? " " Because I don't want to. "
-" Why aren't you going? " " Because I don't want to. "
-" Will he pass the examination? " " I am afraid not. "
+" Why aren't you going ? " " Because I don't want to . "
+" Why aren't you going ? " " Because I don't want to . "
+" Will he pass the examination ? " " I am afraid not . "
 A bird in the hand is better than two in the bush .
 A boy of seventeen is often as tall as his father .
 A good many people have told me to take a holiday .
@@ -24879,8 +24879,8 @@ You want to be excused from doing that , don't you ?
 You'd better go to see your family doctor at once .
 You'll find it difficult to meet her requirements .
 You're working too hard . Take it easy for a while .
-" Have you seen my cell phone? " " It's on the table. "
-" Where have you been? " " I've been to the barber's. "
+" Have you seen my cell phone ? " " It's on the table . "
+" Where have you been ? " " I've been to the barber's . "
 Academic fraud is more common than you might think .
 All of us would like to get rid of nuclear weapons .
 All you have to do is say the word , and I'll leave .
@@ -25367,8 +25367,8 @@ You continue making the same mistakes time after time .
 You need to attach your photo to the application form .
 You should've done it earlier . It can't be helped now .
 You're the one who suggested that we do that together .
-" He'd like to have a coffee after work. " " I would too. "
-" How did you get my phone number? " " Tom gave it to me. "
+" He'd like to have a coffee after work . " " I would too . "
+" How did you get my phone number ? " " Tom gave it to me . "
 According to TV news , there was a plane crash in India .
 According to the weather forecast , it'll snow tomorrow .
 After I talked with my teacher , I decided to work hard .
@@ -25569,8 +25569,8 @@ You should ask your father for his advice and follow it .
 You'd better take an umbrella with you in case it rains .
 You'll never achieve anything if you don't study harder .
 Your mother must have been beautiful when she was young .
-" When will you be back? " " It all depends on the weather. "
-" When will you be back? " " It all depends on the weather. "
+" When will you be back ? " " It all depends on the weather . "
+" When will you be back ? " " It all depends on the weather . "
 A burglar broke into my house while I was away on a trip .
 About how much will I have to pay for all the treatments ?
 According to the weather forecast , it will snow tomorrow .
@@ -25676,7 +25676,7 @@ In the Edo period , moon-viewing parties were very popular .
 Indigenous Australians have eaten kangaroos for millennia .
 It is up to you to decide whether we will go there or not .
 It is up to you to decide whether we will go there or not .
-It says in the Bible , " Man shall not live on bread alone. "
+It says in the Bible , " Man shall not live on bread alone . "
 It took me a little more time than usually to fall asleep .
 It was difficult for him to hide his pride in his success .
 It's impossible to do the sights of Tokyo in a day or two .
@@ -25717,8 +25717,8 @@ Would you mind if I shut the window ? I have a slight cold .
 Yesterday , an explosion occurred at the fireworks factory .
 You may think those shoes are in fashion , but they aren't .
 You will exist but you will never know what it is to live .
-" When will you come back? " " It all depends on the weather. "
-" When will you come back? " " It all depends on the weather. "
+" When will you come back ? " " It all depends on the weather . "
+" When will you come back ? " " It all depends on the weather . "
 According to my calculation , she should be in India by now .
 After I cleaned the window , I could see through it clearly .
 All of a sudden , the enemy bombs came down on us like rain .
@@ -25841,9 +25841,9 @@ Would you like me to get you something from the supermarket ?
 You can lie to everyone else , but you can't lie to yourself .
 You can't fight a good fight with such a defeatist attitude .
 You should try to form the habit of using your dictionaries .
-" Shall I have him call you when he gets back? " " Yes , please. "
-" What's going on in the cave ? I'm curious. " " I have no idea. "
-" What's going on in the cave ? I'm curious. " " I have no idea. "
+" Shall I have him call you when he gets back ? " " Yes , please . "
+" What's going on in the cave ? I'm curious . " " I have no idea . "
+" What's going on in the cave ? I'm curious . " " I have no idea . "
 A fire broke out last night and three houses were burnt down .
 A new team was formed in order to take part in the boat race .
 After a long argument , I finally persuaded her to go camping .
@@ -25994,8 +25994,8 @@ Today our artificial satellites are revolving around the earth .
 Tom didn't know exactly what it was that Mary wanted him to do .
 We were unable to make contact with them until it was too late .
 You'll get into trouble if your girlfriend finds out the truth .
-" Why are you going to Japan? " " To attend a conference in Tokyo. "
-" Will you have some more coffee? " " No , thanks . I've had enough. "
+" Why are you going to Japan ? " " To attend a conference in Tokyo . "
+" Will you have some more coffee ? " " No , thanks . I've had enough . "
 Children depend on their parents for food , clothing and shelter .
 Do you know the difference between a microscope and a telescope ?
 Everybody is supposed to know the law , but few people really do .
@@ -26036,8 +26036,8 @@ We're going to eat a lot tonight so I hope you're not on a diet .
 When Dad finds out what you've done , he's going to hit the roof .
 You must've been surprised to meet your teacher in such a place .
 You should do that as often as you can while you're still young .
-" We haven't seen each other since 2009. " " Has it been that long? "
-" Will you be at my party tomorrow night? " " I'll try to be there. "
+" We haven't seen each other since 2009 . " " Has it been that long ? "
+" Will you be at my party tomorrow night ? " " I'll try to be there . "
 A considerable amount of time and effort have been spent already .
 All you need is ignorance and confidence and the success is sure .
 As a matter of fact , I haven't eaten anything since this morning .
@@ -26144,7 +26144,7 @@ Tom asked me to tell you he didn't plan on going to Boston with you .
 Tom started as a janitor , but he's now the president of the company .
 Tom told Mary not to waste her time trying to convince John to help .
 Tom wants to learn boxing , but his mother thinks it's too dangerous .
-" Do you know when they will arrive? " " At eleven-thirty this evening. "
+" Do you know when they will arrive ? " " At eleven-thirty this evening . "
 Always do right . This will gratify some people and astonish the rest .
 Everybody talks about the weather , but nobody does anything about it .
 He and I were inseparable friends during our time together in school .
@@ -26208,7 +26208,7 @@ Tom couldn't go to college because his family didn't have enough money .
 Tom thought he had a chance to make a lot of money on the stock market .
 When his food supply ran short , he had to look for a new place to live .
 While I was reading in bed last night , I fell asleep with the light on .
-" Where have you been? " " I have been to the station to see a friend off. "
+" Where have you been ? " " I have been to the station to see a friend off . "
 After I got married , my Japanese got better and I could understand more .
 As I missed the train , I had to wait for the next one for about an hour .
 By the way , did you find the umbrella you said you'd lost the other day ?
@@ -26354,7 +26354,7 @@ For the other 600 million people , English is either a second language or a fore
 Lonely people tend to be afraid of meeting others , which ensures they will always be lonely .
 That place's food is delicious and their prices are low . However , their location isn't good .
 When people meet , first impressions determine more than 50 percent of whatever happens next .
-" There's an apostrophe missing . It's and its are different. " " I know . It was a typing error. "
+" There's an apostrophe missing . It's and its are different . " " I know . It was a typing error . "
 In Japan , it rains quite a bit during our rainy season which is from mid-June until mid-July .
 Right now , we have blueberries , blackberries , cherries , strawberries , peaches and nectarines .
 Throughout the five years of painful cancer treatments , he managed to keep a stiff upper lip .
@@ -26378,7 +26378,7 @@ Tom's daughter pretended not to know him when he came to pick her up from school
 Many conservationists fear the continuing slaughter of whales is pushing these animals towards extinction .
 The Japanese Parliament today officially elected Ryūtarō Hashimoto as the country's 52nd prime minister .
 Last year in the Philippines , earthquakes and tidal waves resulted in the deaths of more than 6,000 people .
-" Is that Tom calling again? " " Yes . He calls every evening these days . I shouldn't have given him my number. "
+" Is that Tom calling again ? " " Yes . He calls every evening these days . I shouldn't have given him my number . "
 My mother speaks French better than my father speaks English , so they usually speak to each other in French .
 Tom didn't know how to translate the word " computer " because the people he was talking to had never seen one .
 Even now , I occasionally think I'd like to see you . Not the you that you are today , but the you I remember from the past .
