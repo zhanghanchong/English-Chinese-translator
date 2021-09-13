@@ -1,3 +1,4 @@
-import torch
+from VocabularyBuilder import VocabularyBuilder
 
-print(torch.cuda.is_available())
+VocabularyBuilder('Chinese.txt', 'Chinese.json', '').build()
+VocabularyBuilder('English.txt', 'English.json', ' ').build()
