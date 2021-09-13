@@ -85,7 +85,7 @@ class Tokenizer:
             self.__file = None
             return None
         sequence_length += 2
-        batch = torch.zeros((batch_size, sequence_length), dtype=torch.int32)
+        batch = torch.zeros((batch_size, sequence_length), dtype=torch.int64)
         for i in range(batch_size):
             batch[i] = self.get_sequence(words_list[i], sequence_length)
         return batch
