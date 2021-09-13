@@ -1,4 +1,4 @@
-from VocabularyBuilder import VocabularyBuilder
+from Tokenizer import Tokenizer
 
-VocabularyBuilder('Chinese', '').build()
-VocabularyBuilder('English', ' ').build()
+chinese_tokenizer = Tokenizer('Chinese', '')
+english_tokenizer = Tokenizer('English', ' ')
