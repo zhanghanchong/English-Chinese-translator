@@ -55,7 +55,7 @@ class Tokenizer:
             self.index_word.append(word)
 
     def get_sequence(self, words, sequence_length):
-        sequence = torch.zeros(sequence_length, dtype=torch.int64)
+        sequence = torch.zeros(sequence_length)
         sequence[0] = self.word_index['<SOS>']
         for i in range(len(words)):
             if words[i] in self.word_index:
@@ -85,7 +85,7 @@ class Tokenizer:
             self.__file = None
             return None
         sequence_length += 2
-        batch = torch.zeros((batch_size, sequence_length), dtype=torch.int64)
+        batch = torch.zeros((batch_size, sequence_length), dtype=torch.int32)
         for i in range(batch_size):
             batch[i] = self.get_sequence(words_list[i], sequence_length)
         return batch
