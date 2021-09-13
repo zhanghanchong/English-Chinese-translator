@@ -55,16 +55,16 @@ class Tokenizer:
             self.index_word.append(word)
 
     def get_sequence(self, words, sequence_length):
-        sequence = torch.zeros(sequence_length)
-        sequence[0] = self.word_index['<SOS>']
+        sequence = torch.zeros((1, sequence_length))
+        sequence[0, 0] = self.word_index['<SOS>']
         for i in range(len(words)):
             if words[i] in self.word_index:
-                sequence[i + 1] = self.word_index[words[i]]
+                sequence[0, i + 1] = self.word_index[words[i]]
             else:
-                sequence[i + 1] = self.word_index['<UNK>']
-        sequence[len(words) + 1] = self.word_index['<EOS>']
+                sequence[0, i + 1] = self.word_index['<UNK>']
+        sequence[0, len(words) + 1] = self.word_index['<EOS>']
         for i in range(len(words) + 2, sequence_length):
-            sequence[i] = self.word_index['<PAD>']
+            sequence[0, i] = self.word_index['<PAD>']
         return sequence
 
     def get_batch(self, batch_size):
@@ -85,7 +85,7 @@ class Tokenizer:
             self.__file = None
             return None
         sequence_length += 2
-        batch = torch.zeros((batch_size, sequence_length), dtype=torch.int64)
+        batch = torch.zeros((sequence_length, batch_size), dtype=torch.int64)
         for i in range(batch_size):
-            batch[i] = self.get_sequence(words_list[i], sequence_length)
+            batch[:, i] = self.get_sequence(words_list[i], sequence_length)
         return batch

@@ -14,10 +14,10 @@ class TokenEmbedding(nn.Module):
 
 
 class PositionalEncoding(nn.Module):
-    def __init__(self, d_model, dropout, max_length):
+    def __init__(self, d_model, dropout, max_sequence_length):
         super().__init__()
         self.__dropout = nn.Dropout(dropout)
-        positional_embedding = torch.arange(max_length).reshape(max_length, 1) / torch.pow(
+        positional_embedding = torch.arange(max_sequence_length).reshape(max_sequence_length, 1) / torch.pow(
             10000, torch.arange(d_model) // 2 * 2 / d_model)
         positional_embedding[:, 0::2] = torch.sin(positional_embedding[:, 0::2])
         positional_embedding[:, 1::2] = torch.cos(positional_embedding[:, 1::2])
@@ -25,3 +25,23 @@ class PositionalEncoding(nn.Module):
 
     def forward(self, tokens_embedding):
         return self.__dropout(tokens_embedding + self.positional_embedding[:tokens_embedding.size(1), :])
+
+
+class TranslatorModel(nn.Module):
+    def __init__(self, d_model, dim_feedforward, dropout, max_sequence_length, nhead, num_encoder_layers,
+                 num_decoder_layers, vocabulary_size_source, vocabulary_size_target):
+        super().__init__()
+        self.token_embedding_source = TokenEmbedding(d_model, vocabulary_size_source)
+        self.token_embedding_target = TokenEmbedding(d_model, vocabulary_size_target)
+        self.positional_encoding = PositionalEncoding(d_model, dropout, max_sequence_length)
+        self.transformer = nn.Transformer(d_model, nhead, num_encoder_layers, num_decoder_layers,
+                                          dim_feedforward, dropout)
+        self.linear = nn.Linear(d_model, vocabulary_size_target)
+
+    def forward(self, source, target, source_mask, target_mask, source_padding_mask, target_padding_mask,
+                memory_key_padding_mask):
+        tokens_embedding_source = self.positional_encoding(self.token_embedding_source(source))
+        tokens_embedding_target = self.positional_encoding(self.token_embedding_target(target))
+        outs = self.transformer(tokens_embedding_source, tokens_embedding_target, source_mask, target_mask, None,
+                                source_padding_mask, target_padding_mask, memory_key_padding_mask)
+        return self.linear(outs)
