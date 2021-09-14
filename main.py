@@ -6,7 +6,7 @@ from torch import nn
 from torch import optim
 from MaskBuilder import MaskBuilder
 from Tokenizer import Tokenizer
-from Tokenizer import UNK, PAD, SOS, EOS
+from Tokenizer import PAD, SOS, EOS
 from TranslatorModel import TranslatorModel
 
 
