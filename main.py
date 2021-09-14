@@ -1,11 +1,16 @@
 import io
 import json
+import os
 import torch
 from torch import nn
 from torch import optim
 from MaskBuilder import MaskBuilder
 from Tokenizer import Tokenizer
 from TranslatorModel import TranslatorModel
+
+
+def get_model_filename(source_language, target_language):
+    return f"model/{source_language}-{target_language}.pth"
 
 
 class Gui:
@@ -26,6 +31,7 @@ class Gui:
         self.__device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     def train(self, source_language, target_language, source_split_token, target_split_token, epochs):
+        model_filename = get_model_filename(source_language, target_language)
         tokenizer = {source_language: Tokenizer(source_language, source_split_token),
                      target_language: Tokenizer(target_language, target_split_token)}
         padding_index = tokenizer[source_language].word_index['<PAD>']
@@ -36,9 +42,13 @@ class Gui:
             if source is None and target is None:
                 break
             max_sequence_length = max(max_sequence_length, max(source.shape[0], target.shape[0]))
-        model = TranslatorModel(self.__d_model, self.__dim_feedforward, self.__dropout, max_sequence_length,
-                                self.__nhead, self.__num_encoder_layers, self.__num_decoder_layers,
-                                len(tokenizer[source_language].index_word), len(tokenizer[target_language].index_word))
+        if os.path.exists(model_filename):
+            model = torch.load(model_filename)
+        else:
+            model = TranslatorModel(self.__d_model, self.__dim_feedforward, self.__dropout, max_sequence_length,
+                                    self.__nhead, self.__num_encoder_layers, self.__num_decoder_layers,
+                                    len(tokenizer[source_language].index_word),
+                                    len(tokenizer[target_language].index_word))
         model = model.to(self.__device)
         model.train()
         loss_function = nn.CrossEntropyLoss(ignore_index=padding_index)
@@ -69,6 +79,9 @@ class Gui:
                 optimizer.step()
                 batch_id += 1
                 print(f"epoch {epoch + 1} batch {batch_id} loss {loss.item():.4f}")
+        if not os.path.exists('model'):
+            os.mkdir('model')
+        torch.save(model, model_filename)
 
 
 gui = Gui()
