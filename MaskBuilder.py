@@ -2,10 +2,10 @@ import torch
 
 
 class MaskBuilder:
-    def __init__(self, padding_index, source, target):
-        self.__padding_index = padding_index
+    def __init__(self, source, target, padding_index):
         self.__source = source
         self.__target = target
+        self.__padding_index = padding_index
 
     def build_masks(self):
         source_mask = torch.zeros((self.__source.shape[0], self.__source.shape[0]))
