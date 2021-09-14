@@ -81,6 +81,18 @@ class Gui:
             os.mkdir('model')
         torch.save(model, model_filename)
 
+    def predict(self, source_language, target_language, source_sentence):
+        model_filename = get_model_filename(source_language, target_language)
+        if not os.path.exists(model_filename):
+            return None
+        tokenizer = {source_language: Tokenizer(source_language), target_language: Tokenizer(target_language)}
+        model = torch.load(model_filename).to(self.__device)
+        model.eval()
+        source_words = tokenizer[source_language].get_words(source_sentence)
+        source = tokenizer[source_language].get_sequence(source_words, len(source_words) + 2).to(self.__device)
+        memory = model.encode(source)
+        print(memory.shape)
+
 
 gui = Gui()
-print(gui.train('Chinese', 'English', 1))
+gui.predict('Chinese', 'English', '我爱你。')

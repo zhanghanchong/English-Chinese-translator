@@ -12,13 +12,6 @@ def get_vocabulary_filename(language):
     return f'vocabulary/{language}.json'
 
 
-def get_words(sentence, split_token):
-    sentence = sentence.rstrip('\n').lower()
-    if split_token == '':
-        return list(sentence)
-    return sentence.split(split_token)
-
-
 class Tokenizer:
     def __build_vocabulary(self):
         word_count = {}
@@ -27,7 +20,7 @@ class Tokenizer:
                 sentence = file.readline()
                 if len(sentence) == 0:
                     break
-                words = get_words(sentence, self.__split_token)
+                words = self.get_words(sentence)
                 for word in words:
                     if word in word_count:
                         word_count[word] += 1
@@ -56,17 +49,23 @@ class Tokenizer:
         for word in self.word_index:
             self.index_word.append(word)
 
+    def get_words(self, sentence):
+        sentence = sentence.rstrip('\n').lower()
+        if self.__split_token == '':
+            return list(sentence)
+        return sentence.split(self.__split_token)
+
     def get_sequence(self, words, sequence_length):
-        sequence = torch.zeros((1, sequence_length))
+        sequence = torch.zeros((sequence_length, 1), dtype=torch.int64)
         sequence[0, 0] = self.word_index['<SOS>']
         for i in range(len(words)):
             if words[i] in self.word_index:
-                sequence[0, i + 1] = self.word_index[words[i]]
+                sequence[i + 1, 0] = self.word_index[words[i]]
             else:
-                sequence[0, i + 1] = self.word_index['<UNK>']
-        sequence[0, len(words) + 1] = self.word_index['<EOS>']
+                sequence[i + 1, 0] = self.word_index['<UNK>']
+        sequence[len(words) + 1, 0] = self.word_index['<EOS>']
         for i in range(len(words) + 2, sequence_length):
-            sequence[0, i] = self.word_index['<PAD>']
+            sequence[i, 0] = self.word_index['<PAD>']
         return sequence
 
     def get_batch(self, batch_size):
@@ -78,7 +77,7 @@ class Tokenizer:
             sentence = self.__file.readline()
             if len(sentence) == 0:
                 break
-            words = get_words(sentence, self.__split_token)
+            words = self.get_words(sentence)
             words_list.append(words)
             sequence_length = max(sequence_length, len(words))
         batch_size = len(words_list)
@@ -89,5 +88,5 @@ class Tokenizer:
         sequence_length += 2
         batch = torch.zeros((sequence_length, batch_size), dtype=torch.int64)
         for i in range(batch_size):
-            batch[:, i] = self.get_sequence(words_list[i], sequence_length)
+            batch[:, i] = self.get_sequence(words_list[i], sequence_length)[:, 0]
         return batch

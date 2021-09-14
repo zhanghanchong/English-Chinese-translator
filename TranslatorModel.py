@@ -46,3 +46,11 @@ class TranslatorModel(nn.Module):
         outs = self.__transformer(tokens_embedding_source, tokens_embedding_target, source_mask, target_mask, None,
                                   source_padding_mask, target_padding_mask, memory_key_padding_mask)
         return self.__linear(outs)
+
+    def encode(self, source):
+        tokens_embedding = self.__positional_encoding(self.__token_embedding_source(source))
+        return self.__transformer.encoder(tokens_embedding)
+
+    def decode(self, target, memory, target_mask):
+        tokens_embedding = self.__positional_encoding(self.__token_embedding_target(target))
+        return self.__transformer.decoder(tokens_embedding, memory, target_mask)
