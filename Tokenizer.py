@@ -42,9 +42,11 @@ class Tokenizer:
         with io.open(get_vocabulary_filename(self.__language), 'w', encoding='UTF-8') as file:
             file.write(json.dumps(vocabulary, indent=4, ensure_ascii=False))
 
-    def __init__(self, language, split_token):
+    def __init__(self, language):
+        with io.open('dataset/split-tokens.json', 'r') as file:
+            split_tokens = json.load(file)
         self.__language = language
-        self.__split_token = split_token
+        self.__split_token = split_tokens[language]
         self.__file = None
         if not os.path.exists(get_vocabulary_filename(language)):
             self.__build_vocabulary()

@@ -30,10 +30,9 @@ class Gui:
         self.__num_decoder_layers = parameters['num_decoder_layers']
         self.__device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    def train(self, source_language, target_language, source_split_token, target_split_token, epochs):
+    def train(self, source_language, target_language, epochs):
         model_filename = get_model_filename(source_language, target_language)
-        tokenizer = {source_language: Tokenizer(source_language, source_split_token),
-                     target_language: Tokenizer(target_language, target_split_token)}
+        tokenizer = {source_language: Tokenizer(source_language), target_language: Tokenizer(target_language)}
         padding_index = tokenizer[source_language].word_index['<PAD>']
         max_sequence_length = 0
         while 1:
@@ -85,4 +84,4 @@ class Gui:
 
 
 gui = Gui()
-gui.train('Chinese', 'English', '', ' ', 1)
+print(gui.train('Chinese', 'English', 1))
