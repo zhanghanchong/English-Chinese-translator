@@ -65,11 +65,10 @@ class Gui:
                 target_input = target[:-1]
                 target_output = target[1:]
                 mask_builder = MaskBuilder(source, target_input, padding_index)
-                source_mask, target_mask, source_padding_mask, target_padding_mask = mask_builder.build_masks()
-                source_mask = source_mask.to(self.__device)
-                target_mask = target_mask.to(self.__device)
-                source_padding_mask = source_padding_mask.to(self.__device)
-                target_padding_mask = target_padding_mask.to(self.__device)
+                source_mask = mask_builder.build_source_mask().to(self.__device)
+                target_mask = mask_builder.build_target_mask().to(self.__device)
+                source_padding_mask = mask_builder.build_source_padding_mask().to(self.__device)
+                target_padding_mask = mask_builder.build_target_padding_mask().to(self.__device)
                 logits = model(source, target_input, source_mask, target_mask, source_padding_mask, target_padding_mask,
                                source_padding_mask)
                 optimizer.zero_grad()
