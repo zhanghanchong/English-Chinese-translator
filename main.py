@@ -2,6 +2,7 @@ import io
 import json
 import os
 import torch
+import wx
 from torch import nn
 from torch import optim
 from MaskBuilder import MaskBuilder
@@ -14,8 +15,8 @@ def get_model_filename(source_language, target_language):
     return f"model/{source_language}-{target_language}.pth"
 
 
-class Gui:
-    def __init__(self):
+class Gui(wx.Frame):
+    def __set_parameters(self):
         with io.open('parameters.json', 'r') as file:
             parameters = json.load(file)
         self.__adam_beta1 = parameters['adam_beta1']
@@ -30,6 +31,14 @@ class Gui:
         self.__num_encoder_layers = parameters['num_encoder_layers']
         self.__num_decoder_layers = parameters['num_decoder_layers']
         self.__device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+    def __init__(self):
+        super().__init__(None, title='Translator', size=(500, 400))
+        self.Center()
+        panel = wx.Panel(self)
+        box_main = wx.BoxSizer(wx.VERTICAL)
+        panel.SetSizer(box_main)
+        self.__set_parameters()
 
     def train(self, source_language, target_language, epochs):
         model_filename = get_model_filename(source_language, target_language)
@@ -104,5 +113,7 @@ class Gui:
         return target_sentence
 
 
+app = wx.App()
 gui = Gui()
-print(gui.predict('Chinese', 'English', '我爱你。'))
+gui.Show()
+app.MainLoop()
