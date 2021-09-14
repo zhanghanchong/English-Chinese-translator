@@ -6,6 +6,7 @@ from torch import nn
 from torch import optim
 from MaskBuilder import MaskBuilder
 from Tokenizer import Tokenizer
+from Tokenizer import UNK, PAD, SOS, EOS
 from TranslatorModel import TranslatorModel
 
 
@@ -33,7 +34,6 @@ class Gui:
     def train(self, source_language, target_language, epochs):
         model_filename = get_model_filename(source_language, target_language)
         tokenizer = {source_language: Tokenizer(source_language), target_language: Tokenizer(target_language)}
-        padding_index = tokenizer[source_language].word_index['<PAD>']
         max_sequence_length = 0
         while 1:
             source = tokenizer[source_language].get_batch(self.__batch_size)
@@ -50,7 +50,7 @@ class Gui:
                                     len(tokenizer[target_language].index_word))
         model = model.to(self.__device)
         model.train()
-        loss_function = nn.CrossEntropyLoss(ignore_index=padding_index)
+        loss_function = nn.CrossEntropyLoss(ignore_index=PAD)
         optimizer = optim.Adam(model.parameters(), self.__learning_rate, (self.__adam_beta1, self.__adam_beta2),
                                self.__adam_epsilon)
         for epoch in range(epochs):
@@ -64,7 +64,7 @@ class Gui:
                 target = target.to(self.__device)
                 target_input = target[:-1]
                 target_output = target[1:]
-                mask_builder = MaskBuilder(source, target_input, padding_index)
+                mask_builder = MaskBuilder(source, target_input)
                 source_mask = mask_builder.build_source_mask().to(self.__device)
                 target_mask = mask_builder.build_target_mask().to(self.__device)
                 source_padding_mask = mask_builder.build_source_padding_mask().to(self.__device)
@@ -91,8 +91,18 @@ class Gui:
         source_words = tokenizer[source_language].get_words(source_sentence)
         source = tokenizer[source_language].get_sequence(source_words, len(source_words) + 2).to(self.__device)
         memory = model.encode(source)
-        print(memory.shape)
+        target = torch.zeros((1, 1), dtype=torch.int64, device=self.__device).fill_(SOS)
+        while target[-1, 0] != EOS:
+            target_mask = MaskBuilder(None, target).build_target_mask().to(self.__device)
+            _, token = torch.max(model.decode(target, memory, target_mask)[-1, 0], dim=0)
+            target = torch.cat(
+                [target, torch.zeros((1, 1), dtype=torch.int64, device=self.__device).fill_(token.item())], dim=0)
+        target_sentence = tokenizer[target_language].index_word[target[1, 0]]
+        for i in range(2, target.shape[0] - 1):
+            if target[i, 0] > EOS:
+                target_sentence += ' ' + tokenizer[target_language].index_word[target[i, 0]]
+        return target_sentence
 
 
 gui = Gui()
-gui.predict('Chinese', 'English', '我爱你。')
+print(gui.predict('Chinese', 'English', '我爱你。'))

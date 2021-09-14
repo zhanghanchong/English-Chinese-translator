@@ -3,6 +3,8 @@ import json
 import torch
 import os
 
+UNK, PAD, SOS, EOS = 0, 1, 2, 3
+
 
 def get_dataset_filename(language):
     return f'dataset/{language}.txt'
@@ -27,7 +29,7 @@ class Tokenizer:
                     else:
                         word_count[word] = 1
         word_count_sorted = sorted(word_count.items(), key=lambda item: item[1], reverse=True)
-        vocabulary = {'<UNK>': 0, '<PAD>': 1, '<SOS>': 2, '<EOS>': 3}
+        vocabulary = {'<UNK>': UNK, '<PAD>': PAD, '<SOS>': SOS, '<EOS>': EOS}
         for i in range(len(word_count_sorted)):
             vocabulary[word_count_sorted[i][0]] = i + 4
         if not os.path.exists('vocabulary'):
@@ -57,15 +59,15 @@ class Tokenizer:
 
     def get_sequence(self, words, sequence_length):
         sequence = torch.zeros((sequence_length, 1), dtype=torch.int64)
-        sequence[0, 0] = self.word_index['<SOS>']
+        sequence[0, 0] = SOS
         for i in range(len(words)):
             if words[i] in self.word_index:
                 sequence[i + 1, 0] = self.word_index[words[i]]
             else:
-                sequence[i + 1, 0] = self.word_index['<UNK>']
-        sequence[len(words) + 1, 0] = self.word_index['<EOS>']
+                sequence[i + 1, 0] = UNK
+        sequence[len(words) + 1, 0] = EOS
         for i in range(len(words) + 2, sequence_length):
-            sequence[i, 0] = self.word_index['<PAD>']
+            sequence[i, 0] = PAD
         return sequence
 
     def get_batch(self, batch_size):

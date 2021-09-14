@@ -53,4 +53,4 @@ class TranslatorModel(nn.Module):
 
     def decode(self, target, memory, target_mask):
         tokens_embedding = self.__positional_encoding(self.__token_embedding_target(target))
-        return self.__transformer.decoder(tokens_embedding, memory, target_mask)
+        return self.__linear(self.__transformer.decoder(tokens_embedding, memory, target_mask))
