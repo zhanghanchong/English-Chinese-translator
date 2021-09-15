@@ -124,11 +124,7 @@ class Gui(wx.Frame):
             _, token = torch.max(model.decode(target, memory, target_mask)[-1, 0], dim=0)
             target = torch.cat(
                 [target, torch.zeros((1, 1), dtype=torch.int64, device=self.__device).fill_(token.item())], dim=0)
-        target_sentence = tokenizer[target_language].index_word[target[1, 0]]
-        for i in range(2, target.shape[0] - 1):
-            if target[i, 0] > EOS:
-                target_sentence += ' ' + tokenizer[target_language].index_word[target[i, 0]]
-        self.__text_ctrl_predict_target_sentence.SetValue(target_sentence)
+        self.__text_ctrl_predict_target_sentence.SetValue(tokenizer[target_language].get_sentence(target))
 
     def __init__(self):
         super().__init__(None, title='Translator', size=(800, 600))
