@@ -37,6 +37,9 @@ class Gui(wx.Frame):
         source_language = self.__text_ctrl_train_source_language.GetValue()
         target_language = self.__text_ctrl_train_target_language.GetValue()
         epochs = self.__text_ctrl_train_epochs.GetValue()
+        if source_language == target_language:
+            self.__text_ctrl_train_logs.SetValue('Source language and target language should be different.')
+            return
         if not os.path.exists(get_dataset_filename(source_language)):
             self.__text_ctrl_train_logs.SetValue('No dataset for source language.')
             return
