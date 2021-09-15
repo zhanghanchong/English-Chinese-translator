@@ -11,6 +11,8 @@ from Tokenizer import get_dataset_filename
 from Tokenizer import PAD, SOS, EOS
 from TranslatorModel import TranslatorModel
 
+MAX_SEQUENCE_LENGTH = 5000
+
 
 def get_model_filename(source_language, target_language):
     return f"model/{source_language}-{target_language}.pth"
@@ -57,17 +59,10 @@ class Gui(wx.Frame):
         self.__text_ctrl_train_logs.Clear()
         model_filename = get_model_filename(source_language, target_language)
         tokenizer = {source_language: Tokenizer(source_language), target_language: Tokenizer(target_language)}
-        max_sequence_length = 0
-        while 1:
-            source = tokenizer[source_language].get_batch(self.__batch_size)
-            target = tokenizer[target_language].get_batch(self.__batch_size)
-            if source is None and target is None:
-                break
-            max_sequence_length = max(max_sequence_length, max(source.shape[0], target.shape[0]))
         if os.path.exists(model_filename):
             model = torch.load(model_filename)
         else:
-            model = TranslatorModel(self.__d_model, self.__dim_feedforward, self.__dropout, max_sequence_length,
+            model = TranslatorModel(self.__d_model, self.__dim_feedforward, self.__dropout, MAX_SEQUENCE_LENGTH,
                                     self.__nhead, self.__num_encoder_layers, self.__num_decoder_layers,
                                     len(tokenizer[source_language].index_word),
                                     len(tokenizer[target_language].index_word))
