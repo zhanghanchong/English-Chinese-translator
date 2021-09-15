@@ -38,20 +38,20 @@ class Gui(wx.Frame):
         target_language = self.__text_ctrl_train_target_language.GetValue()
         epochs = self.__text_ctrl_train_epochs.GetValue()
         if not os.path.exists(get_dataset_filename(source_language)):
-            self.__text_ctrl_train_log.SetValue('No dataset for source language.')
+            self.__text_ctrl_train_logs.SetValue('No dataset for source language.')
             return
         if not os.path.exists(get_dataset_filename(target_language)):
-            self.__text_ctrl_train_log.SetValue('No dataset for target language.')
+            self.__text_ctrl_train_logs.SetValue('No dataset for target language.')
             return
         try:
             epochs = int(epochs)
         except:
-            self.__text_ctrl_train_log.SetValue('"Epochs" should be a positive integer.')
+            self.__text_ctrl_train_logs.SetValue('"Epochs" should be a positive integer.')
             return
         if epochs <= 0:
-            self.__text_ctrl_train_log.SetValue('"Epochs" should be a positive integer.')
+            self.__text_ctrl_train_logs.SetValue('"Epochs" should be a positive integer.')
             return
-        self.__text_ctrl_train_log.Clear()
+        self.__text_ctrl_train_logs.Clear()
         model_filename = get_model_filename(source_language, target_language)
         tokenizer = {source_language: Tokenizer(source_language), target_language: Tokenizer(target_language)}
         max_sequence_length = 0
@@ -96,7 +96,7 @@ class Gui(wx.Frame):
                 loss.backward()
                 optimizer.step()
                 batch_id += 1
-                self.__text_ctrl_train_log.AppendText(f"epoch {epoch + 1} batch {batch_id} loss {loss.item():.4f}\n")
+                self.__text_ctrl_train_logs.AppendText(f"epoch {epoch + 1} batch {batch_id} loss {loss.item():.4f}\n")
         if not os.path.exists('model'):
             os.mkdir('model')
         torch.save(model, model_filename)
@@ -104,27 +104,33 @@ class Gui(wx.Frame):
     def __predict(self, event):
         source_language = self.__text_ctrl_predict_source_language.GetValue()
         target_language = self.__text_ctrl_predict_target_language.GetValue()
-        source_sentence = self.__text_ctrl_predict_source_sentence.GetValue()
+        source_sentences = self.__text_ctrl_predict_source_sentences.GetValue().split('\n')
         model_filename = get_model_filename(source_language, target_language)
         if not os.path.exists(model_filename):
-            self.__text_ctrl_predict_target_sentence.SetValue('No model.')
+            self.__text_ctrl_predict_target_sentences.SetValue('No model.')
             return
-        if len(source_sentence) == 0:
-            self.__text_ctrl_predict_target_sentence.SetValue('Sentence should not be empty.')
-            return
+        self.__text_ctrl_predict_target_sentences.Clear()
         tokenizer = {source_language: Tokenizer(source_language), target_language: Tokenizer(target_language)}
         model = torch.load(model_filename).to(self.__device)
         model.eval()
-        source_words = tokenizer[source_language].get_words(source_sentence)
-        source = tokenizer[source_language].get_sequence(source_words, len(source_words) + 2).to(self.__device)
-        memory = model.encode(source)
-        target = torch.zeros((1, 1), dtype=torch.int64, device=self.__device).fill_(SOS)
-        while target[-1, 0] != EOS:
-            target_mask = MaskBuilder(None, target).build_target_mask().to(self.__device)
-            _, token = torch.max(model.decode(target, memory, target_mask)[-1, 0], dim=0)
-            target = torch.cat(
-                [target, torch.zeros((1, 1), dtype=torch.int64, device=self.__device).fill_(token.item())], dim=0)
-        self.__text_ctrl_predict_target_sentence.SetValue(tokenizer[target_language].get_sentence(target))
+        for i in range(len(source_sentences)):
+            source_sentence = source_sentences[i]
+            if len(source_sentence) == 0:
+                if i < len(source_sentences) - 1:
+                    self.__text_ctrl_predict_target_sentences.AppendText('\n')
+                continue
+            source_words = tokenizer[source_language].get_words(source_sentence)
+            source = tokenizer[source_language].get_sequence(source_words, len(source_words) + 2).to(self.__device)
+            memory = model.encode(source)
+            target = torch.zeros((1, 1), dtype=torch.int64, device=self.__device).fill_(SOS)
+            while target[-1, 0] != EOS:
+                target_mask = MaskBuilder(None, target).build_target_mask().to(self.__device)
+                _, token = torch.max(model.decode(target, memory, target_mask)[-1, 0], dim=0)
+                target = torch.cat(
+                    [target, torch.zeros((1, 1), dtype=torch.int64, device=self.__device).fill_(token.item())], dim=0)
+            self.__text_ctrl_predict_target_sentences.AppendText(tokenizer[target_language].get_sentence(target))
+            if i < len(source_sentences) - 1:
+                self.__text_ctrl_predict_target_sentences.AppendText('\n')
 
     def __init__(self):
         super().__init__(None, title='Translator', size=(800, 600))
@@ -135,13 +141,13 @@ class Gui(wx.Frame):
         self.__text_ctrl_train_epochs = wx.TextCtrl(panel)
         self.__button_train = wx.Button(panel, label='Train')
         self.__button_train.Bind(wx.EVT_BUTTON, self.__train)
-        self.__text_ctrl_train_log = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
+        self.__text_ctrl_train_logs = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
         self.__text_ctrl_predict_source_language = wx.TextCtrl(panel)
         self.__text_ctrl_predict_target_language = wx.TextCtrl(panel)
         self.__button_predict = wx.Button(panel, label='Translate')
         self.__button_predict.Bind(wx.EVT_BUTTON, self.__predict)
-        self.__text_ctrl_predict_source_sentence = wx.TextCtrl(panel)
-        self.__text_ctrl_predict_target_sentence = wx.TextCtrl(panel)
+        self.__text_ctrl_predict_source_sentences = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
+        self.__text_ctrl_predict_target_sentences = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
         box_train_parameters = wx.BoxSizer()
         box_train_parameters.Add(wx.StaticText(panel, label='Source language:'), proportion=2,
                                  flag=wx.EXPAND | wx.ALL, border=5)
@@ -154,8 +160,8 @@ class Gui(wx.Frame):
         box_train_parameters.Add(wx.StaticText(panel, label='Epochs:'), proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
         box_train_parameters.Add(self.__text_ctrl_train_epochs, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
         box_train_parameters.Add(self.__button_train, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
-        box_train_log = wx.BoxSizer()
-        box_train_log.Add(self.__text_ctrl_train_log, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+        box_train_logs = wx.BoxSizer()
+        box_train_logs.Add(self.__text_ctrl_train_logs, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
         box_predict_parameters = wx.BoxSizer()
         box_predict_parameters.Add(wx.StaticText(panel, label='Source language:'), proportion=1,
                                    flag=wx.EXPAND | wx.ALL, border=5)
@@ -168,13 +174,13 @@ class Gui(wx.Frame):
         box_predict_parameters.Add(self.__button_predict, proportion=1,
                                    flag=wx.EXPAND | wx.ALL, border=5)
         box_predict_sentences = wx.BoxSizer()
-        box_predict_sentences.Add(self.__text_ctrl_predict_source_sentence, proportion=1,
+        box_predict_sentences.Add(self.__text_ctrl_predict_source_sentences, proportion=1,
                                   flag=wx.EXPAND | wx.ALL, border=5)
-        box_predict_sentences.Add(self.__text_ctrl_predict_target_sentence, proportion=1,
+        box_predict_sentences.Add(self.__text_ctrl_predict_target_sentences, proportion=1,
                                   flag=wx.EXPAND | wx.ALL, border=5)
         box_main = wx.BoxSizer(wx.VERTICAL)
         box_main.Add(box_train_parameters, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
-        box_main.Add(box_train_log, proportion=5, flag=wx.EXPAND | wx.ALL, border=5)
+        box_main.Add(box_train_logs, proportion=5, flag=wx.EXPAND | wx.ALL, border=5)
         box_main.Add(box_predict_parameters, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
         box_main.Add(box_predict_sentences, proportion=5, flag=wx.EXPAND | wx.ALL, border=5)
         panel.SetSizer(box_main)
