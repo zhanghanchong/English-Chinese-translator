@@ -14,6 +14,10 @@ from TranslatorModel import TranslatorModel
 MAX_SEQUENCE_LENGTH = 5000
 
 
+def get_embedding_filename(language):
+    return f"embedding/{language}.pth"
+
+
 def get_model_filename(source_language, target_language):
     return f"model/{source_language}-{target_language}.pth"
 
@@ -34,6 +38,23 @@ class Gui(wx.Frame):
         self.__num_encoder_layers = parameters['num_encoder_layers']
         self.__num_decoder_layers = parameters['num_decoder_layers']
         self.__device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+    def __pretrain(self, event):
+        language = self.__text_ctrl_pretrain_language.GetValue()
+        epochs = self.__text_ctrl_pretrain_epochs.GetValue()
+        if not os.path.exists(get_dataset_filename(language)):
+            self.__text_ctrl_pretrain_logs.SetValue('No dataset for language.')
+            return
+        try:
+            epochs = int(epochs)
+        except:
+            self.__text_ctrl_pretrain_logs.SetValue('"Epochs" should be a positive integer.')
+            return
+        if epochs <= 0:
+            self.__text_ctrl_pretrain_logs.SetValue('"Epochs" should be a positive integer.')
+            return
+        self.__text_ctrl_pretrain_logs.Clear()
+        pass
 
     def __train(self, event):
         source_language = self.__text_ctrl_train_source_language.GetValue()
@@ -131,21 +152,40 @@ class Gui(wx.Frame):
                 self.__text_ctrl_predict_target_sentences.AppendText('\n')
 
     def __init__(self):
-        super().__init__(None, title='Translator', size=(800, 600))
+        super().__init__(None, title='Translator', size=(1000, 600))
         self.Center()
         panel = wx.Panel(self)
+        self.__text_ctrl_pretrain_language = wx.TextCtrl(panel)
+        self.__text_ctrl_pretrain_epochs = wx.TextCtrl(panel)
+        self.__text_ctrl_pretrain_logs = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
         self.__text_ctrl_train_source_language = wx.TextCtrl(panel)
         self.__text_ctrl_train_target_language = wx.TextCtrl(panel)
         self.__text_ctrl_train_epochs = wx.TextCtrl(panel)
-        self.__button_train = wx.Button(panel, label='Train')
-        self.__button_train.Bind(wx.EVT_BUTTON, self.__train)
         self.__text_ctrl_train_logs = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
         self.__text_ctrl_predict_source_language = wx.TextCtrl(panel)
         self.__text_ctrl_predict_target_language = wx.TextCtrl(panel)
-        self.__button_predict = wx.Button(panel, label='Translate')
-        self.__button_predict.Bind(wx.EVT_BUTTON, self.__predict)
         self.__text_ctrl_predict_source_sentences = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
         self.__text_ctrl_predict_target_sentences = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
+        button_pretrain = wx.Button(panel, label='Pretrain')
+        button_pretrain.Bind(wx.EVT_BUTTON, self.__pretrain)
+        button_train = wx.Button(panel, label='Train')
+        button_train.Bind(wx.EVT_BUTTON, self.__train)
+        button_predict = wx.Button(panel, label='Translate')
+        button_predict.Bind(wx.EVT_BUTTON, self.__predict)
+        box_pretrain_parameters = wx.BoxSizer()
+        box_pretrain_parameters.Add(wx.StaticText(panel, label='Language:'), proportion=1,
+                                    flag=wx.EXPAND | wx.ALL, border=5)
+        box_pretrain_parameters.Add(self.__text_ctrl_pretrain_language, proportion=5,
+                                    flag=wx.EXPAND | wx.ALL, border=5)
+        box_pretrain_parameters.Add(wx.StaticText(panel, label='Epochs:'), proportion=1,
+                                    flag=wx.EXPAND | wx.ALL, border=5)
+        box_pretrain_parameters.Add(self.__text_ctrl_pretrain_epochs, proportion=5,
+                                    flag=wx.EXPAND | wx.ALL, border=5)
+        box_pretrain_parameters.Add(button_pretrain, proportion=1,
+                                    flag=wx.EXPAND | wx.ALL, border=5)
+        box_pretrain_logs = wx.BoxSizer()
+        box_pretrain_logs.Add(self.__text_ctrl_pretrain_logs, proportion=1,
+                              flag=wx.EXPAND | wx.ALL, border=5)
         box_train_parameters = wx.BoxSizer()
         box_train_parameters.Add(wx.StaticText(panel, label='Source language:'), proportion=2,
                                  flag=wx.EXPAND | wx.ALL, border=5)
@@ -155,11 +195,15 @@ class Gui(wx.Frame):
                                  flag=wx.EXPAND | wx.ALL, border=5)
         box_train_parameters.Add(self.__text_ctrl_train_target_language, proportion=4,
                                  flag=wx.EXPAND | wx.ALL, border=5)
-        box_train_parameters.Add(wx.StaticText(panel, label='Epochs:'), proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
-        box_train_parameters.Add(self.__text_ctrl_train_epochs, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
-        box_train_parameters.Add(self.__button_train, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+        box_train_parameters.Add(wx.StaticText(panel, label='Epochs:'), proportion=1,
+                                 flag=wx.EXPAND | wx.ALL, border=5)
+        box_train_parameters.Add(self.__text_ctrl_train_epochs, proportion=1,
+                                 flag=wx.EXPAND | wx.ALL, border=5)
+        box_train_parameters.Add(button_train, proportion=1,
+                                 flag=wx.EXPAND | wx.ALL, border=5)
         box_train_logs = wx.BoxSizer()
-        box_train_logs.Add(self.__text_ctrl_train_logs, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+        box_train_logs.Add(self.__text_ctrl_train_logs, proportion=1,
+                           flag=wx.EXPAND | wx.ALL, border=5)
         box_predict_parameters = wx.BoxSizer()
         box_predict_parameters.Add(wx.StaticText(panel, label='Source language:'), proportion=1,
                                    flag=wx.EXPAND | wx.ALL, border=5)
@@ -169,7 +213,7 @@ class Gui(wx.Frame):
                                    flag=wx.EXPAND | wx.ALL, border=5)
         box_predict_parameters.Add(self.__text_ctrl_predict_target_language, proportion=3,
                                    flag=wx.EXPAND | wx.ALL, border=5)
-        box_predict_parameters.Add(self.__button_predict, proportion=1,
+        box_predict_parameters.Add(button_predict, proportion=1,
                                    flag=wx.EXPAND | wx.ALL, border=5)
         box_predict_sentences = wx.BoxSizer()
         box_predict_sentences.Add(self.__text_ctrl_predict_source_sentences, proportion=1,
@@ -177,6 +221,8 @@ class Gui(wx.Frame):
         box_predict_sentences.Add(self.__text_ctrl_predict_target_sentences, proportion=1,
                                   flag=wx.EXPAND | wx.ALL, border=5)
         box_main = wx.BoxSizer(wx.VERTICAL)
+        box_main.Add(box_pretrain_parameters, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+        box_main.Add(box_pretrain_logs, proportion=5, flag=wx.EXPAND | wx.ALL, border=5)
         box_main.Add(box_train_parameters, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
         box_main.Add(box_train_logs, proportion=5, flag=wx.EXPAND | wx.ALL, border=5)
         box_main.Add(box_predict_parameters, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
