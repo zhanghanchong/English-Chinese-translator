@@ -3,7 +3,8 @@ import json
 import torch
 import os
 
-UNK, PAD, SOS, EOS = 0, 1, 2, 3
+UNK, PAD, SOS, EOS, MSK = 0, 1, 2, 3, 4
+SPECIAL_TOKENS_NUM = 5
 
 
 def get_dataset_filename(language):
@@ -29,9 +30,9 @@ class Tokenizer:
                     else:
                         word_count[word] = 1
         word_count_sorted = sorted(word_count.items(), key=lambda item: item[1], reverse=True)
-        vocabulary = {'<UNK>': UNK, '<PAD>': PAD, '<SOS>': SOS, '<EOS>': EOS}
+        vocabulary = {'<UNK>': UNK, '<PAD>': PAD, '<SOS>': SOS, '<EOS>': EOS, '<MSK>': MSK}
         for i in range(len(word_count_sorted)):
-            vocabulary[word_count_sorted[i][0]] = i + 4
+            vocabulary[word_count_sorted[i][0]] = i + SPECIAL_TOKENS_NUM
         if not os.path.exists('vocabulary'):
             os.mkdir('vocabulary')
         with io.open(get_vocabulary_filename(self.__language), 'w', encoding='UTF-8') as file:
@@ -96,6 +97,6 @@ class Tokenizer:
     def get_sentence(self, sequence):
         sentence = self.index_word[sequence[1, 0]]
         for i in range(2, sequence.shape[0] - 1):
-            if sequence[i, 0] > EOS:
+            if sequence[i, 0] >= SPECIAL_TOKENS_NUM:
                 sentence += self.__split_token + self.index_word[sequence[i, 0]]
         return sentence
