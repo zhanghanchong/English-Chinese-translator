@@ -8,7 +8,7 @@ def get_pretrain_model_filename(language):
 
 
 def get_finetune_model_filename(source_language, target_language):
-    return f"model/{source_language}-{target_language}.pth"
+    return f'model/finetune/{source_language}-{target_language}.pth'
 
 
 class TokenEmbedding(nn.Module):

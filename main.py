@@ -1,6 +1,7 @@
 import io
 import json
 import os
+import random
 import torch
 import wx
 from torch import nn
@@ -8,9 +9,9 @@ from torch import optim
 from MaskBuilder import MaskBuilder
 from Tokenizer import Tokenizer
 from Tokenizer import get_dataset_filename
-from Tokenizer import PAD, SOS, EOS
-from TranslatorModel import TranslatorModel
-from TranslatorModel import get_finetune_model_filename
+from Tokenizer import PAD, SOS, EOS, MSK, SPECIAL_TOKENS_NUM
+from TranslatorModel import PretrainModel, TranslatorModel
+from TranslatorModel import get_pretrain_model_filename, get_finetune_model_filename
 
 MAX_SEQUENCE_LENGTH = 5000
 
@@ -47,7 +48,47 @@ class Gui(wx.Frame):
             self.__text_ctrl_pretrain_logs.SetValue('"Epochs" should be a positive integer.')
             return
         self.__text_ctrl_pretrain_logs.Clear()
-        pass
+        model_filename = get_pretrain_model_filename(language)
+        tokenizer = Tokenizer(language)
+        if os.path.exists(model_filename):
+            model = torch.load(model_filename)
+        else:
+            model = PretrainModel(self.__d_model, self.__dim_feedforward, self.__dropout, MAX_SEQUENCE_LENGTH,
+                                  self.__nhead, self.__num_encoder_layers, len(tokenizer.index_word))
+        model = model.to(self.__device)
+        model.train()
+        loss_function = nn.CrossEntropyLoss(ignore_index=PAD)
+        optimizer = optim.Adam(model.parameters(), self.__learning_rate, (self.__adam_beta1, self.__adam_beta2),
+                               self.__adam_epsilon)
+        for epoch in range(epochs):
+            batch = 0
+            while 1:
+                source = tokenizer.get_batch(self.__batch_size)
+                if source is None:
+                    break
+                source = source.to(self.__device)
+                target = torch.clone(source)
+                for i in range(source.shape[0]):
+                    for j in range(source.shape[1]):
+                        if source[i, j] >= SPECIAL_TOKENS_NUM:
+                            probability = random.random()
+                            if probability < 0.12:
+                                source[i, j] = MSK
+                            elif probability < 0.135:
+                                source[i, j] = random.randint(SPECIAL_TOKENS_NUM, len(tokenizer.index_word) - 1)
+                mask_builder = MaskBuilder(source, None)
+                source_mask = mask_builder.build_source_mask().to(self.__device)
+                source_padding_mask = mask_builder.build_source_padding_mask().to(self.__device)
+                logits = model(source, source_mask, source_padding_mask)
+                optimizer.zero_grad()
+                loss = loss_function(logits.reshape(-1, logits.shape[-1]), target.reshape(-1))
+                loss.backward()
+                optimizer.step()
+                batch += 1
+                self.__text_ctrl_pretrain_logs.AppendText(f'epoch {epoch + 1} batch {batch} loss {loss.item():.4f}\n')
+        if not os.path.exists('model/pretrain'):
+            os.makedirs('model/pretrain')
+        torch.save(model, model_filename)
 
     def __train(self, event):
         source_language = self.__text_ctrl_train_source_language.GetValue()
@@ -86,7 +127,7 @@ class Gui(wx.Frame):
         optimizer = optim.Adam(model.parameters(), self.__learning_rate, (self.__adam_beta1, self.__adam_beta2),
                                self.__adam_epsilon)
         for epoch in range(epochs):
-            batch_id = 0
+            batch = 0
             while 1:
                 source = tokenizer[source_language].get_batch(self.__batch_size)
                 target = tokenizer[target_language].get_batch(self.__batch_size)
@@ -107,10 +148,10 @@ class Gui(wx.Frame):
                 loss = loss_function(logits.reshape(-1, logits.shape[-1]), target_output.reshape(-1))
                 loss.backward()
                 optimizer.step()
-                batch_id += 1
-                self.__text_ctrl_train_logs.AppendText(f"epoch {epoch + 1} batch {batch_id} loss {loss.item():.4f}\n")
-        if not os.path.exists('model'):
-            os.mkdir('model')
+                batch += 1
+                self.__text_ctrl_train_logs.AppendText(f'epoch {epoch + 1} batch {batch} loss {loss.item():.4f}\n')
+        if not os.path.exists('model/finetune'):
+            os.makedirs('model/finetune')
         torch.save(model, model_filename)
 
     def __predict(self, event):
