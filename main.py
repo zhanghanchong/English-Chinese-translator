@@ -10,16 +10,9 @@ from Tokenizer import Tokenizer
 from Tokenizer import get_dataset_filename
 from Tokenizer import PAD, SOS, EOS
 from TranslatorModel import TranslatorModel
+from TranslatorModel import get_finetune_model_filename
 
 MAX_SEQUENCE_LENGTH = 5000
-
-
-def get_embedding_filename(language):
-    return f"embedding/{language}.pth"
-
-
-def get_model_filename(source_language, target_language):
-    return f"model/{source_language}-{target_language}.pth"
 
 
 class Gui(wx.Frame):
@@ -78,7 +71,7 @@ class Gui(wx.Frame):
             self.__text_ctrl_train_logs.SetValue('"Epochs" should be a positive integer.')
             return
         self.__text_ctrl_train_logs.Clear()
-        model_filename = get_model_filename(source_language, target_language)
+        model_filename = get_finetune_model_filename(source_language, target_language)
         tokenizer = {source_language: Tokenizer(source_language), target_language: Tokenizer(target_language)}
         if os.path.exists(model_filename):
             model = torch.load(model_filename)
@@ -124,7 +117,7 @@ class Gui(wx.Frame):
         source_language = self.__text_ctrl_predict_source_language.GetValue()
         target_language = self.__text_ctrl_predict_target_language.GetValue()
         source_sentences = self.__text_ctrl_predict_source_sentences.GetValue().split('\n')
-        model_filename = get_model_filename(source_language, target_language)
+        model_filename = get_finetune_model_filename(source_language, target_language)
         if not os.path.exists(model_filename):
             self.__text_ctrl_predict_target_sentences.SetValue('No model.')
             return

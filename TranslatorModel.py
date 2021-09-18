@@ -3,6 +3,14 @@ import torch
 from torch import nn
 
 
+def get_pretrain_model_filename(language):
+    return f'model/pretrain/{language}.pth'
+
+
+def get_finetune_model_filename(source_language, target_language):
+    return f"model/{source_language}-{target_language}.pth"
+
+
 class TokenEmbedding(nn.Module):
     def __init__(self, d_model, vocabulary_size):
         super().__init__()
@@ -26,6 +34,21 @@ class PositionalEncoding(nn.Module):
 
     def forward(self, tokens_embedding):
         return self.__dropout(tokens_embedding + self.positional_embedding[:tokens_embedding.shape[0], :])
+
+
+class PretrainModel(nn.Module):
+    def __init__(self, d_model, dim_feedforward, dropout, max_sequence_length, nhead, num_layers, vocabulary_size):
+        super().__init__()
+        self.token_embedding = TokenEmbedding(d_model, vocabulary_size)
+        self.__positional_encoding = PositionalEncoding(d_model, dropout, max_sequence_length)
+        encoder_layer = nn.TransformerEncoderLayer(d_model, nhead, dim_feedforward, dropout)
+        self.__transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers)
+        self.__linear = nn.Linear(d_model, vocabulary_size)
+
+    def forward(self, source, source_mask, source_padding_mask):
+        tokens_embedding = self.__positional_encoding(self.token_embedding(source))
+        outs = self.__transformer_encoder(tokens_embedding, source_mask, source_padding_mask)
+        return self.__linear(outs)
 
 
 class TranslatorModel(nn.Module):
