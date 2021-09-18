@@ -3,14 +3,6 @@ import torch
 from torch import nn
 
 
-def get_pretrain_model_filename(language):
-    return f'model/pretrain/{language}.pth'
-
-
-def get_finetune_model_filename(source_language, target_language):
-    return f'model/finetune/{source_language}-{target_language}.pth'
-
-
 class TokenEmbedding(nn.Module):
     def __init__(self, d_model, vocabulary_size):
         super().__init__()
@@ -53,10 +45,10 @@ class PretrainModel(nn.Module):
 
 class TranslatorModel(nn.Module):
     def __init__(self, d_model, dim_feedforward, dropout, max_sequence_length, nhead, num_encoder_layers,
-                 num_decoder_layers, vocabulary_size_source, vocabulary_size_target):
+                 num_decoder_layers, token_embedding_source, token_embedding_target, vocabulary_size_target):
         super().__init__()
-        self.__token_embedding_source = TokenEmbedding(d_model, vocabulary_size_source)
-        self.__token_embedding_target = TokenEmbedding(d_model, vocabulary_size_target)
+        self.__token_embedding_source = token_embedding_source
+        self.__token_embedding_target = token_embedding_target
         self.__positional_encoding = PositionalEncoding(d_model, dropout, max_sequence_length)
         self.__transformer = nn.Transformer(d_model, nhead, num_encoder_layers, num_decoder_layers,
                                             dim_feedforward, dropout)
@@ -64,16 +56,19 @@ class TranslatorModel(nn.Module):
 
     def forward(self, source, target, source_mask, target_mask, source_padding_mask, target_padding_mask,
                 memory_key_padding_mask):
-        tokens_embedding_source = self.__positional_encoding(self.__token_embedding_source(source))
-        tokens_embedding_target = self.__positional_encoding(self.__token_embedding_target(target))
+        with torch.no_grad():
+            tokens_embedding_source = self.__positional_encoding(self.__token_embedding_source(source))
+            tokens_embedding_target = self.__positional_encoding(self.__token_embedding_target(target))
         outs = self.__transformer(tokens_embedding_source, tokens_embedding_target, source_mask, target_mask, None,
                                   source_padding_mask, target_padding_mask, memory_key_padding_mask)
         return self.__linear(outs)
 
     def encode(self, source):
-        tokens_embedding = self.__positional_encoding(self.__token_embedding_source(source))
+        with torch.no_grad():
+            tokens_embedding = self.__positional_encoding(self.__token_embedding_source(source))
         return self.__transformer.encoder(tokens_embedding)
 
     def decode(self, target, memory, target_mask):
-        tokens_embedding = self.__positional_encoding(self.__token_embedding_target(target))
+        with torch.no_grad():
+            tokens_embedding = self.__positional_encoding(self.__token_embedding_target(target))
         return self.__linear(self.__transformer.decoder(tokens_embedding, memory, target_mask))

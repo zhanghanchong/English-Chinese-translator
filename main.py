@@ -11,9 +11,16 @@ from Tokenizer import Tokenizer
 from Tokenizer import get_dataset_filename
 from Tokenizer import PAD, SOS, EOS, MSK, SPECIAL_TOKENS_NUM
 from TranslatorModel import PretrainModel, TranslatorModel
-from TranslatorModel import get_pretrain_model_filename, get_finetune_model_filename
 
 MAX_SEQUENCE_LENGTH = 5000
+
+
+def get_pretrain_model_filename(language):
+    return f'model/pretrain/{language}.pth'
+
+
+def get_finetune_model_filename(source_language, target_language):
+    return f'model/finetune/{source_language}-{target_language}.pth'
 
 
 class Gui(wx.Frame):
@@ -103,6 +110,12 @@ class Gui(wx.Frame):
         if not os.path.exists(get_dataset_filename(target_language)):
             self.__text_ctrl_train_logs.SetValue('No dataset for target language.')
             return
+        if not os.path.exists(get_pretrain_model_filename(source_language)):
+            self.__text_ctrl_train_logs.SetValue('No pretrain model for source language.')
+            return
+        if not os.path.exists(get_pretrain_model_filename(target_language)):
+            self.__text_ctrl_train_logs.SetValue('No pretrain model for target language.')
+            return
         try:
             epochs = int(epochs)
         except:
@@ -117,9 +130,11 @@ class Gui(wx.Frame):
         if os.path.exists(model_filename):
             model = torch.load(model_filename)
         else:
+            token_embedding_source = torch.load(get_pretrain_model_filename(source_language)).token_embedding
+            token_embedding_target = torch.load(get_pretrain_model_filename(target_language)).token_embedding
             model = TranslatorModel(self.__d_model, self.__dim_feedforward, self.__dropout, MAX_SEQUENCE_LENGTH,
                                     self.__nhead, self.__num_encoder_layers, self.__num_decoder_layers,
-                                    len(tokenizer[source_language].index_word),
+                                    token_embedding_source, token_embedding_target,
                                     len(tokenizer[target_language].index_word))
         model = model.to(self.__device)
         model.train()
