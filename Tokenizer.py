@@ -95,8 +95,8 @@ class Tokenizer:
         return batch
 
     def get_sentence(self, sequence):
-        sentence = self.index_word[sequence[1, 0]]
-        for i in range(2, sequence.shape[0] - 1):
+        sentence = ''
+        for i in range(1, sequence.shape[0] - 1):
             if sequence[i, 0] >= SPECIAL_TOKENS_NUM:
-                sentence += self.__split_token + self.index_word[sequence[i, 0]]
-        return sentence
+                sentence += self.index_word[sequence[i, 0]] + self.__split_token
+        return sentence.strip(self.__split_token)
