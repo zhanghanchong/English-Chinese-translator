@@ -4,8 +4,7 @@ import os
 import random
 import torch
 import wx
-from torch import nn
-from torch import optim
+from torch import nn, optim
 from MaskBuilder import MaskBuilder
 from Tokenizer import Tokenizer
 from Tokenizer import get_dataset_filename
